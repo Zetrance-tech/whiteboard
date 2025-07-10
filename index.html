@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZeLearn - AI-Powered Whiteboard</title>
+    <meta name="description" content="Collaborative whiteboard with AI-assisted diagram generation" />
+    <link rel="icon" type="image/png" href="/pencil.png" />
+    <style>
+      .logo {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        height: 60px;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Top-left logo -->
+    <img src="public/pencil.png" alt="SketchSpark Logo" class="logo" />
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
