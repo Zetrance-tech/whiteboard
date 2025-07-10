@@ -1,75 +1,107 @@
-# SketchSpark - AI-Powered Whiteboard
+ZeLearn AI Whiteboard – by Zetrance Technology
+ZeLearn AI Whiteboard is an advanced collaborative drawing and ideation platform developed by Zetrance Technology. Designed for seamless real-time interaction and powered by AI, it helps educators, students, and teams brainstorm and visualize ideas more efficiently with intelligent assistance and creative freedom.
 
-SketchSpark is a collaborative whiteboard application that leverages AI to help users create and generate diagrams effortlessly. It combines the power of real-time collaboration with intelligent diagram generation capabilities.
+🚀 Features
+🎨 Interactive Canvas – Draw freely using an intuitive whiteboard interface
 
-## Features
+🤖 AI Assistance – Generate, enhance, or suggest diagrams with AI agents
 
-- 🎨 Interactive whiteboard interface
-- 🤖 AI-assisted diagram generation
-- 📱 Responsive design
-- 🎯 Intuitive drawing tools
-- 💾 Auto-save functionality
+🧠 Digital Human Integration – Interact with an AI-powered virtual assistant
 
-## Tech Stack
+📘 Embedded Learning Resources – Open books and visual materials directly in the whiteboard
 
-- **Frontend Framework**: React with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn-ui
-- **State Management**: React Hooks
+📦 Export Options – Save your canvas or export diagrams easily
 
-## Getting Started
+🌐 Responsive & Cross-Device – Works smoothly on desktops, tablets, and mobiles
 
-### Prerequisites
+💾 Auto-save – Ensures your work is saved and synced as you go
 
-- Node.js (v16 or higher)
-- npm (v7 or higher)
+🛠 Tech Stack
+Frontend: React (with TypeScript)
 
-### Installation
+Build Tool: Vite
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/sketch-spark-diagrams.git
-cd sketch-spark-diagrams
-```
+Styling: Tailwind CSS
 
-2. Install dependencies:
-```bash
+Component Library: shadcn/ui + Lucide Icons
+
+State Management: React Hooks & Context API
+
+⚙️ Getting Started
+Prerequisites
+Node.js (v16+)
+
+npm (v7+)
+
+Installation
+Clone the repository:
+
+bash
+Copy
+Edit
+git clone https://github.com/Zetrance-tech/whiteboard.git
+cd whiteboard
+Install dependencies:
+
+bash
+Copy
+Edit
 npm install
-```
+Start the development server:
 
-3. Start the development server:
-```bash
+bash
+Copy
+Edit
 npm run dev
-```
+Open your browser at:
 
-4. Open your browser and navigate to `http://localhost:5173`
+arduino
+Copy
+Edit
+http://localhost:5173
+👩‍💻 Development Notes
+ZeLearn uses Vite for rapid development with:
 
-## Development
+Lightning-fast Hot Module Reloading (HMR)
 
-The project uses Vite for development, which provides:
-- Fast hot module replacement (HMR)
-- TypeScript support out of the box
-- Optimized build process
+First-class TypeScript support
 
-## Contributing
+Optimized builds
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+🧩 Contributing
+We welcome contributions!
 
-## Acknowledgments
+Fork the repository
 
-- Thanks to all contributors who have helped shape this project
-- Special thanks to the open-source community for the amazing tools and libraries
+Create a feature branch:
 
-## Contact
+bash
+Copy
+Edit
+git checkout -b feature/YourFeatureName
+Commit your changes:
 
-For any inquiries, reach out at [kaushalsahu.me@gmailcom](mailto:kaushalsahu.me@gmailcom).<br>
-GitHub: [@kaushalsahu07](https://github.com/kaushalsahu07).<br>
-Linkedin: [@kaushalsahu07](www.linkedin.com/in/kaushalsahu07).<br>
-Instagram: [@cd.kaushal](https://www.instagram.com/cd.kaushal?igsh=cTVram1ia3Vvamxz).<br>
-Portfolio: [Website Link ](https://kaushalsahu07.github.io/portfolio/).<br>
-X (Tweeter): [@kaushalsahu_07](https://x.com/kaushalsahu_07?t=7nk-jApWrJkgW6YwklJZWQ&s=09).<br>
+bash
+Copy
+Edit
+git commit -m "Add: YourFeatureName"
+Push to your branch:
+
+bash
+Copy
+Edit
+git push origin feature/YourFeatureName
+Create a Pull Request
+
+🙌 Acknowledgements
+Thanks to all contributors and users supporting ZeLearn
+
+Built on open-source tools that empower modern web development
+
+📬 Contact Us
+Zetrance Technology Pvt. Ltd.
+📧 Email: zetrancexr@gmail.com
+🌐 Website: www.zetrance.com
+📍 LinkedIn: 
+📦 GitHub: Zetrance-tech
+
