@@ -8,10 +8,10 @@ interface DigitalHumanPopupProps {
 export const DigitalHumanPopup = ({ onClose }: DigitalHumanPopupProps) => {
   const iframeURL = "https://skyyskill.zetrance.com"; // Replace with your URL
 
-  return (
+ return (
     <div
-      className="fixed bottom-4 right-4 z-50 w-[30vw] h-[90vh] bg-white dark:bg-gray-900 border border-primary/20 dark:border-primary/10
-                 shadow-2xl rounded-xl overflow-hidden flex flex-col backdrop-blur-xl backdrop-saturate-150 animate-in slide-in-from-bottom"
+      className="fixed top-0 right-0 z-50 w-[30vw] h-screen bg-white dark:bg-gray-900 border-l border-primary/20 dark:border-primary/10
+                 shadow-2xl rounded-l-xl overflow-hidden flex flex-col backdrop-blur-xl backdrop-saturate-150 animate-in slide-in-from-right"
     >
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">

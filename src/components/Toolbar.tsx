@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Bot , Box, BookOpen } from "lucide-react";
+import { Bot , Box, BookOpen, Image } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { 
   MousePointer, 
@@ -60,6 +60,7 @@ interface ToolbarProps {
   onClear: () => void;
   onUndo: () => void;
   onZoom: (direction: 'in' | 'out') => void;
+  onAddImage: () => void;
   onShowAI: () => void;
   onShowDigitalHuman: () => void; 
   onShowModel: () => void;
@@ -119,9 +120,10 @@ export const Toolbar = ({
   onUndo, 
   onZoom,
   onShowAI,
+  onAddImage,
   onShowDigitalHuman,
   onShowModel,
-   onShowBook,
+  onShowBook,
   onShowExport,
   activeColor,
   onColorChange,
@@ -265,6 +267,7 @@ export const Toolbar = ({
         <ToolButton onClick={() => onZoom('in')} icon={ZoomIn} label="Zoom In" colorClass="blue" />
         <ToolButton onClick={() => onZoom('out')} icon={ZoomOut} label="Zoom Out" colorClass="blue" />
         <ToolButton onClick={onShowExport} icon={Download} label="Export" colorClass="green" />
+        <ToolButton onClick={onAddImage} icon={Image} label="Add Image" colorClass="green" />
         <ToolButton onClick={onShowAI} icon={Sparkles} label="AI Assistant" colorClass="purple" />
         <ToolButton onClick={onShowDigitalHuman} icon={Bot} label="AI Teacher" colorClass="purple" />
         <ToolButton onClick={onShowModel} icon={Box} label="3D Model" colorClass="purple" />
@@ -374,9 +377,22 @@ export const Toolbar = ({
 
               <Separator className="bg-gray-200 dark:bg-[#4a5361]" />
 
+                            
+              
               {/* AI Assistant Section */}
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-gray-800 dark:text-white">AI Services</h4>
+                <h4 className="text-sm font-medium text-gray-800 dark:text-white">AI Services</h4>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onAddImage}
+                  className={cn(
+                    "w-full justify-start gap-2",
+                    "text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-[#363d47]"
+                  )}
+                ></Button>
+                
                 <Button
                   variant="ghost"
                   size="sm"

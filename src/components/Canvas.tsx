@@ -57,6 +57,10 @@ export const Canvas = () => {
   const [eraserPath, setEraserPath] = useState<{x: number, y: number}[]>([]);
   const { theme } = useTheme();
 
+  const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+ 
+
   // Shape drawing state
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
@@ -137,6 +141,8 @@ export const Canvas = () => {
       }
     };
   }, []);
+
+  
 
   // Handle theme changes
   useEffect(() => {
@@ -712,8 +718,108 @@ export const Canvas = () => {
     return () => window.removeEventListener('keydown', handleShortcut);
   }, [ICON_SHORTCUTS, setActiveTool]);
 
+  // Handle file drops
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!fabricCanvas) return;
+
+    const canvasOffset = fabricCanvas.getElement().getBoundingClientRect();
+    const x = e.clientX - canvasOffset.left;
+    const y = e.clientY - canvasOffset.top;
+
+    // Handle image file drops
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        
+        reader.onload = (event) => {
+          const imgUrl = event.target?.result;
+          if (!imgUrl) return;
+
+          // Create a new Image object to get dimensions
+          const img = new Image();
+          img.onload = () => {
+            const fabricImage = new fabric.Image(img, {
+              left: x,
+              top: y,
+              selectable: true,
+              evented: true,
+              hasControls: true,
+              hasBorders: true,
+            });
+
+            // Scale image if it's too large
+            const maxSize = 300;
+            const scale = Math.min(
+              maxSize / img.width,
+              maxSize / img.height
+            );
+            
+            fabricImage.scale(scale);
+            
+            fabricCanvas.add(fabricImage);
+            fabricCanvas.setActiveObject(fabricImage);
+            fabricCanvas.renderAll();
+            toast.success("Image added to canvas!");
+          };
+
+          img.src = imgUrl as string;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Handle image URLs
+    const imageUrl = e.dataTransfer.getData('text/uri-list') || 
+                    e.dataTransfer.getData('text/plain');
+    
+    if (imageUrl && imageUrl.match(/\.(jpeg|jpg|gif|png)$/i)) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = () => {
+        const fabricImage = new fabric.Image(img, {
+          left: x,
+          top: y,
+          selectable: true,
+          evented: true,
+          hasControls: true,
+          hasBorders: true,
+        });
+
+        const maxSize = 300;
+        const scale = Math.min(
+          maxSize / img.width,
+          maxSize / img.height
+        );
+        
+        fabricImage.scale(scale);
+        
+        fabricCanvas.add(fabricImage);
+        fabricCanvas.setActiveObject(fabricImage);
+        fabricCanvas.renderAll();
+        toast.success("Image added to canvas!");
+      };
+
+      img.src = imageUrl;
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="relative w-full h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    <div
+      className="relative w-full h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <canvas ref={canvasRef} className="absolute inset-0" />
       
       {/* Responsive Floating Toolbar */}

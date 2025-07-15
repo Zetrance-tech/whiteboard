@@ -320,11 +320,16 @@ const AIContent = ({
                   "flex flex-col max-w-[85%] rounded-lg p-2 sm:p-3",
                   message.role === 'user' 
                     ? "ml-auto bg-primary text-primary-foreground"
-                    : "bg-muted/50 text-foreground"
+                    : "bg-muted/50 text-foreground cursor-move" // Add cursor-move for assistant messages
                 )}
-                draggable={message.role === 'assistant'}
-               onDragStart={(e) => {
-              e.dataTransfer.setData("text/plain", message.content);
+                draggable={message.role === 'assistant'} // Make only assistant messages draggable
+                onDragStart={(e) => {
+                  e.dataTransfer.setData("text/plain", message.content);
+                  e.dataTransfer.setData("application/json", JSON.stringify({
+                    type: "ai-text",
+                    content: message.content
+                  }));
+                  e.dataTransfer.effectAllowed = "copy";
                 }}
               >
                 <div className="text-xs sm:text-sm whitespace-pre-wrap">{message.content}</div>
@@ -443,6 +448,8 @@ export const AIAssistant = ({ canvas, onClose, activeColor }: AIAssistantProps) 
   const [mode, setMode] = useState<'generate' | 'chat'>('generate');
   const [isGenerating, setIsGenerating] = useState(false);
 
+
+
   const contentProps: AIContentProps = {
     onClose,
     mode,
@@ -453,21 +460,66 @@ export const AIAssistant = ({ canvas, onClose, activeColor }: AIAssistantProps) 
     setIsGenerating,
   };
 
-  // Mobile view using Drawer
-  const isMobile = useIsMobile();
-  if (isMobile) {
-    return (
-      <Drawer open={true} onOpenChange={onClose}>
-        <DrawerContent className="h-[85vh] max-h-[85vh]">
-          <div className="p-4 h-full overflow-hidden">
-            {/* Background gradient effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10" />
-            <AIContent {...contentProps} />
-          </div>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
+  // ✅ Move useEffect here, not inside if-block
+  useEffect(() => {
+    if (!canvas) return;
+    const canvasEl = canvas.upperCanvasEl;
+    if (!canvasEl) return;
+
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+      e.dataTransfer!.dropEffect = 'copy';
+    };
+
+    const handleDrop = (e: DragEvent) => {
+      e.preventDefault();
+      const json = e.dataTransfer?.getData('application/json');
+      if (json) {
+        try {
+          const parsed = JSON.parse(json);
+          if (parsed.type === 'ai-text' && parsed.content) {
+            const pointer = canvas.getPointer(e);
+            const textBox = new fabric.Textbox(parsed.content, {
+
+              left: pointer.x,
+              top: pointer.y,
+              fontSize: 16,
+              fill: activeColor || 'black',
+              selectable: true,
+            });
+            canvas.add(textBox);
+            canvas.requestRenderAll();
+          }
+        } catch (err) {
+          console.error('Failed to parse dropped data:', err);
+        }
+      }
+
+      // Reset border
+      canvas.wrapperEl!.style.border = "none";
+    };
+
+    const handleDragEnter = () => {
+      canvas.wrapperEl!.style.border = "2px dashed #4f46e5";
+    };
+
+    const handleDragLeave = () => {
+      canvas.wrapperEl!.style.border = "none";
+    };
+
+    canvasEl.addEventListener('dragover', handleDragOver);
+    canvasEl.addEventListener('drop', handleDrop);
+    canvasEl.addEventListener('dragenter', handleDragEnter);
+    canvasEl.addEventListener('dragleave', handleDragLeave);
+
+    return () => {
+      canvasEl.removeEventListener('dragover', handleDragOver);
+      canvasEl.removeEventListener('drop', handleDrop);
+      canvasEl.removeEventListener('dragenter', handleDragEnter);
+      canvasEl.removeEventListener('dragleave', handleDragLeave);
+    };
+  }, [canvas, activeColor]);
+
 
   // Desktop/Tablet view using Dialog for tablets and Card for desktop
   const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
@@ -484,12 +536,12 @@ export const AIAssistant = ({ canvas, onClose, activeColor }: AIAssistantProps) 
   }
 
   // Desktop view
-  return (
-    <Card className="fixed right-4 bottom-4 w-96 h-[600px] p-6 shadow-2xl border border-primary/20 dark:border-primary/10 
+ return (
+    <Card className="fixed top-0 right-0 h-screen w-[30vw] p-6 shadow-2xl border-l border-primary/20 dark:border-primary/10 
       bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl backdrop-saturate-150 
-      transition-all duration-300 animate-in slide-in-from-bottom
+      transition-all duration-300 animate-in slide-in-from-right
       hover:shadow-primary/5 dark:shadow-lg dark:shadow-primary/10
-      rounded-xl overflow-hidden">
+      rounded-l-xl overflow-hidden flex flex-col z-50">
       {/* Background gradient effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10" />
       <AIContent {...contentProps} />
