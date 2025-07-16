@@ -6,6 +6,7 @@ import { DigitalHumanPopup } from "./DigitalHuman";
 import { Book } from "./TextBook";
 import { Model } from "./ModelViewer";
 import { ExportPanel } from "./ExportPanel";
+import { PTable } from "./PdTable";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -53,6 +54,7 @@ export const Canvas = () => {
   const [showDigitalHuman, setShowDigitalHuman] = useState(false);
   const [showModel, setShowModel] = useState(false);
   const [showBook, setShowBook] = useState(false);
+  const [showPTable, setShowPTable] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [eraserPath, setEraserPath] = useState<{x: number, y: number}[]>([]);
   const { theme } = useTheme();
@@ -836,12 +838,14 @@ export const Canvas = () => {
           onShowDigitalHuman={() => setShowDigitalHuman(true)}
           onShowModel={() => setShowModel(true)}
           onShowBook={() => setShowBook(true)}
+          onShowPTable={() => setShowPTable(true)}
           onShowExport={() => setShowExport(true)}
           activeColor={activeColor}
           onColorChange={handleColorChange}
           strokeWidth={strokeWidth}
           onStrokeWidthChange={setStrokeWidth}
           canvas={fabricCanvas}
+          onAddImage={() => {}}
         />
       </div>
 
@@ -870,6 +874,15 @@ export const Canvas = () => {
             <div className="fixed inset-0 z-50 lg:relative lg:inset-auto">
              <Book
              onClose={() => setShowBook(false)}
+           />
+        </div>
+      )}
+
+        {/* Periodic table - Responsive */}
+          {showPTable && (
+            <div className="fixed inset-0 z-50 lg:relative lg:inset-auto">
+             <PTable
+             onClose={() => setShowPTable(false)}
            />
         </div>
       )}

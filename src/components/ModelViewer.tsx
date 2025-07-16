@@ -11,7 +11,7 @@ export const Model = ({ onClose }: ModelProps) => {
 
   return (
     <div
-      className="fixed top-0 right-0 z-50 w-[30vw] h-screen bg-white dark:bg-gray-900 border-l border-primary/20 dark:border-primary/10
+      className="fixed top-0 right-0 z-50 w-[60vw] h-screen bg-white dark:bg-gray-900 border-l border-primary/20 dark:border-primary/10
                  shadow-2xl rounded-l-xl overflow-hidden flex flex-col backdrop-blur-xl backdrop-saturate-150 animate-in slide-in-from-right"
     >
       {/* Header */}
